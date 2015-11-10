@@ -1,0 +1,9 @@
+ChangeLog
+
+PingER2 2.0.1 is the first release of PingER version 2.  Changes include:
+-- XML configuration file
+-- Automated installation script (conforming to GNU standards...more or less)
+-- Java/Swing GUI for PingER configuration
+-- Randomized sleep times
+-- Addition of IPv6 ping ability
+-- more?

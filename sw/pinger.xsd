@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="Pinger">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="DefaultHost" type="HostInfo" />
+                <xs:element name="HostList" type="Hosts" />
+                <xs:element name="BeaconList" type="Hosts" />
+		<xs:element name="BeaconListConfig">
+		    <xs:complexType>
+			<xs:sequence>
+                            <xs:element name="BeaconListURL" type="xs:string" />
+		            <xs:element name="LastChecked" type="xs:integer" />
+			    <xs:element name="RefreshInterval" type="xs:string" />
+			    <xs:element name="HttpGetBin" type="xs:string" />
+			<xs:sequence>
+		    </xs:complexType>
+		</xs:element>
+	        <xs:element name="Version" type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="Hosts">
+        <xs:sequence>
+            <xs:element name="Host" type="HostInfo" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="HostInfo">
+        <xs:sequence>
+            <xs:element name="Name" type="xs:string" />
+            <xs:element name="IPAddress" type="xs:string" minOccurs="0" />
+            <xs:element name="Ping" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:all>
+                        <xs:element name="NumPings" type="xs:integer" />
+                        <xs:element name="PacketSize" type="xs:decimal" />
+                    </xs:all>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="WaitTime" type="xs:decimal" minOccurs="0" />
+            <xs:element name="LastDNSQuery" type="xs:integer" minOccurs="0" />
+            <xs:element name="EnableDNSCache" type="xs:boolean" minOccurs="0" />
+            <xs:element name="Alarm" minOccurs="0">
+                <xs:complexType>
+                    <xs:all>
+                        <xs:element name="EMailAddress" type="xs:string" />
+                        <xs:element name="Interval" type="xs:integer" />
+	                <xs:element name="Enabled" type="xs:boolean" />
+                    </xs:all>
+                </xs:complexType>
+            </xs:element>
+	    <xs:element name="IPV4" type="xs:boolean" />
+            <xs:element name="IPV6" type="xs:boolean" />
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

@@ -1,0 +1,832 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>PingER2 - New version of PingER with more configurability and maintainablity</title>
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body style="background-color: white">
+
+<p><a name="__index__"></a></p>
+<!-- INDEX BEGIN -->
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#pinger.xml_configuration_file_format">Pinger.XML Configuration File Format</a></li>
+	<li><a href="#description_of_internal_variables">Description of Internal Variables</a></li>
+	<li><a href="#description_of_internal_functions">Description of Internal Functions</a></li>
+	<ul>
+
+		<li><a href="#checkbeaconconfiguration()"><code>checkBeaconConfiguration()</code></a></li>
+		<li><a href="#parsetime(datestring)"><code>parseTime(dateString)</code></a></li>
+		<li><a href="#getattributewithalternative(main,alternative,attributename)"><code>getAttributeWithAlternative(main,alternative,attributeName)</code></a></li>
+		<li><a href="#gethostattribute(host,attribute)"><code>getHostAttribute(host,attribute)</code></a></li>
+		<li><a href="#getgroupattribute(host,group,attribute)"><code>getGroupAttribute(host,group,attribute)</code></a></li>
+		<li><a href="#setgroupattribute(host,group,attribute,value)"><code>setGroupAttribute(host,group,attribute,value)</code></a></li>
+		<li><a href="#retrieveandcheckfordefault(tagname,_defaultvalue)">retrieveAndcheckForDefault(tagName, defaultValue)</a></li>
+		<li><a href="#getlist(listname)"><code>getList(listName)</code></a></li>
+		<li><a href="#checkdefaulthostconfig(host)"><code>checkDefaultHostConfig(host)</code></a></li>
+		<li><a href="#alarm(host,message)"><code>alarm(host,message)</code></a></li>
+		<li><a href="#alarmnotify(host,message)"><code>alarmNotify(host,message)</code></a></li>
+		<li><a href="#getip(host)"><code>getIP(host)</code></a></li>
+		<li><a href="#updatednscache(host)"><code>updateDNSCache(host)</code></a></li>
+		<li><a href="#querydnscache(host)"><code>queryDNSCache(host)</code></a></li>
+		<li><a href="#doping(ip,interval,size,numpings,host,resultsmatter)"><code>doPing(ip,interval,size,numPings,host,resultsMatter)</code></a></li>
+		<li><a href="#log_it(....)"><code>log_it(....)</code></a></li>
+		<li><a href="#pinghost(host)"><code>pingHost(host)</code></a></li>
+		<li><a href="#logger(message,loglevel)"><code>logger(message,logLevel)</code></a></li>
+		<li><a href="#waitforchild(pipeinformation)"><code>waitForChild(PipeInformation)</code></a></li>
+		<li><a href="#pingallhosts()"><code>pingAllHosts()</code></a></li>
+	</ul>
+
+	<li><a href="#copyright">COPYRIGHT</a></li>
+</ul>
+<!-- INDEX END -->
+
+<hr />
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>PingER2 - New version of PingER with more configurability and maintainablity</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<p>Edit pinger.xml to configure pingER2.</p>
+<p>To run pinger2 execute: <code>perl pinger2.pl.</code></p>
+<p>Pinger will ping all the hosts listed in the configuration and output the results in the DataDirectory</p>
+<p>
+</p>
+<hr />
+<h1><a name="pinger.xml_configuration_file_format">Pinger.XML Configuration File Format</a></h1>
+<p>The Pinger.XML configuration file is written in XML following the XML Schema Definition in pinger.xsd. PingER2 does not check the file for adherence to this schema and might crash if the configuration file is corrupted. Use a XML-validator (for example <a href="http://apps.gotdotnet.com/xmltools/xsdvalidator/)">http://apps.gotdotnet.com/xmltools/xsdvalidator/)</a> to make sure manual changes to the file are correctly done. Preferred and strongly encouraged is the use of the configuration GUI. In case you should edit the configuration file manually make sure that you pay attention to exact capitalization (e.g. TimeToNotification != TimetoNotification).</p>
+<dl>
+<dt><strong><a name="item_main_group">Main Group</a></strong><br />
+</dt>
+<dl>
+<dt><strong><a name="item_%3cpinger%3e">&lt;PingER&gt;</a></strong><br />
+</dt>
+<dd>
+All the configuration groups are contained in a &lt;PingER&gt; and &lt;/PingER&gt; pair.
+</dd>
+<dd>
+<p>Example:</p>
+</dd>
+<dd>
+<pre>
+    See the file pinger.example.xml in the main directory of the PingER distribution.</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_%3cversion%3e">&lt;Version&gt;</a></strong><br />
+</dt>
+<dd>
+Contains the version number of the PingER2 program. This will be used to convert the file-format to a new version when PingER2 evolves.
+</dd>
+<dd>
+<p>Example:</p>
+</dd>
+<dd>
+<pre>
+    &lt;Version&gt;2.0.0&lt;/Version&gt;</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_%3cdatadirectory%3e">&lt;DataDirectory&gt;</a></strong><br />
+</dt>
+<dd>
+All output produced from PingER2 will be dumped into this Directory. If you want to publish PingER2 data on the web using 'connectivity.pl' from the PingER distribution then make sure that this location is accessible. The path has to be provided without a trailing '/'.
+</dd>
+<dd>
+<p>Example:</p>
+</dd>
+<dd>
+<pre>
+    &lt;DataDirectory&gt;/home/PingER/data&lt;/DataDirectory&gt;</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_%3csrcname%3e">&lt;SrcName&gt;</a></strong><br />
+</dt>
+<dd>
+This is the name of the machine where PingER2 runs. PingER2 can try to determine this automatically if this entry is missing. Since this name appears in the output of PingER2 this not be a bogus value like Localhost.
+</dd>
+<dd>
+<p>Example:</p>
+</dd>
+<dd>
+<pre>
+    &lt;SrcName&gt;gaia9.cc.gatech.edu&lt;/SrcName&gt;</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_%3csrcip%3e">&lt;SrcIP&gt;</a></strong><br />
+</dt>
+<dd>
+This IP will be outputted by PingER2 and can be determined by &lt;SrcName&gt; if the entry is missing.
+</dd>
+<dd>
+<p>Example:</p>
+</dd>
+<dd>
+<pre>
+    &lt;SrcIP&gt;192.168.2.1&lt;/SrcIP&gt;</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_%3cmaxprocesscount%3e">&lt;MaxProcessCount&gt;</a></strong><br />
+</dt>
+<dd>
+This number determines how many current ping processes are spawned by PingER2. This effectively multiplies the speed of PingER2. Make sure that you have clearance from your Networking Department to lunch massive ping attacks and refrain from pinging arbitrary targets for fun. This might lead to ICMP relay being disabled or you getting mail from network admins.
+</dd>
+<dd>
+<p>Example:</p>
+</dd>
+<dd>
+<pre>
+    &lt;MaxProcessCount&gt;5&lt;/MaxProcessCount&gt;</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_%3cdnsv4cmd%3e">&lt;DnsV4Cmd&gt;</a></strong><br />
+</dt>
+<dd>
+PingER2 uses this command to query IPV4 addresses from DNS. The command should return a single line containing the IP or a blank line. Popular 'dig' or 'host' will return multiple lines due to CNAME or multiple IP addresses. PingER2 distribution contains a helper script called DnsV4Cmd.pl that uses Perl built-in gethostbyname to resolve host names to IPV4 addresses. For IPV6 such a built-in does not exists so that dig had to be used. The command should include %destination which will be replaced by PingER2 with the host name.
+</dd>
+<dd>
+<p>Example:</p>
+</dd>
+<dd>
+<pre>
+    &lt;dnsV4Cmd&gt;/home/pinger/pinger/dnsV4Cmd.pl %destination&lt;/dnsV4Cmd&gt;</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_%3cdnsv6cmd%3e">&lt;DnsV6Cmd&gt;</a></strong><br />
+</dt>
+<dd>
+Exactly as DnsV4Cmd but defines the DNS-command to be used for IPV6 lookups. The command and it's caveats are described within the description of DnsV4Cmd.
+</dd>
+<dd>
+<p>Example:</p>
+</dd>
+<dd>
+<pre>
+    &lt;dnsV6Cmd&gt;/usr/bin/dig -t aaaa +short %destination&lt;/dnsV6Cmd&gt;</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_%3cpingv4cmd%3e">&lt;PingV4Cmd&gt;</a></strong><br />
+</dt>
+<dd>
+PingER2 uses this command to ping individual host using IPV4 protocol. PingER2 will try to determine this command during the installation. Make sure that the user the script is run under has all the rights to execute the PingCmd, which might not be the case if you are running a security restricted *nix distribution. This means that either you have to have suid-bits set on the command or run the script using root rights of which the latter is strongly discouraged.
+</dd>
+<dd>
+<p>The following identifiers should be present in the command:</p>
+</dd>
+<dl>
+<dt></dt>
+<dd>
+%deadline Should be placed where the timeout parameter is placed
+</dd>
+<p></p>
+<dt></dt>
+<dd>
+%count Will be replaced with the number of pings to send
+</dd>
+<p></p>
+<dt></dt>
+<dd>
+%interval The script fills in the interval between individual pings
+</dd>
+<p></p>
+<dt></dt>
+<dd>
+%packetsize The size of individual packets will be entered here by the script
+</dd>
+<p></p>
+<dt></dt>
+<dd>
+%destination The destination IP, without it there is no ping.
+</dd>
+<p></p></dl>
+<p>Example:</p>
+<pre>
+    &lt;PingV4Cmd&gt;/bin/ping -n -w %deadline -c %count -i %interval -s %packetsize %destination&lt;/PingV4Cmd&gt;</pre>
+<dt><strong><a name="item_%3cpingv6cmd%3e">&lt;PingV6Cmd&gt;</a></strong><br />
+</dt>
+<dd>
+Exactly the same as PingV4Cmd but for identifying the command used for pinging IPV6 hosts.
+</dd>
+<dd>
+<p>Example:</p>
+</dd>
+<dd>
+<pre>
+    &lt;PingV6Cmd&gt;/bin/ping6 -n -w %deadline -c %count -i %interval -s %packetsize %destination&lt;/PingV6Cmd&gt;</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_%3cbeaconlistconfig%3e">&lt;BeaconListConfig&gt;</a></strong><br />
+</dt>
+<dd>
+The list of beacons stored in &lt;BeaconList&gt; can be updated according to the entries in &lt;BeaconListConfig&gt;. This is recommended because using this technique no unnecessary hosts are pinged and new entries will be automatically updated.
+</dd>
+<dd>
+<p>This tag has the following sub-entries:</p>
+</dd>
+<dl>
+<dt><strong><a name="item_%3chttpgetbin%3e">&lt;HttpGetBin&gt;</a></strong><br />
+</dt>
+<dd>
+This is the command which will be used to retrieve the beacons List. %s will be expanded to the URL of the file to fetch as defined in BeaconListURL.
+</dd>
+<p></p>
+<dt><strong><a name="item_%3cbeaconlisturl%3e">&lt;BeaconListURL&gt;</a></strong><br />
+</dt>
+<dd>
+Holds the address of the file to be downloaded using the &lt;HttpGetBin&gt; command and be parsed for beacon information.
+</dd>
+<p></p>
+<dt><strong><a name="item_%3clastchecked%3e">&lt;LastChecked&gt;</a></strong><br />
+</dt>
+<dd>
+Will be filled with a value by PingER2 to keep track of the last time the beaconList was retrieved.
+</dd>
+<p></p>
+<dt><strong><a name="item_%3crefereshinterval%3e">&lt;RefereshInterval&gt;</a></strong><br />
+</dt>
+<dd>
+A date that determines the amount of time between two consequitive downloads of the list (See section on dates for examples and reference to the format used).
+</dd>
+<p></p></dl>
+<p>Example:</p>
+<pre>
+    &lt;BeaconListConfig&gt;
+        &lt;HttpGetBin&gt;lynx -source -dump %s&lt;/HttpGetBin&gt;
+        &lt;RefreshInterval&gt;1 day&lt;/RefreshInterval&gt;
+        &lt;LastChecked&gt;1077803679&lt;/LastChecked&gt;
+        &lt;BeaconListURL&gt;<a href="http://www-iepm.slac.stanford.edu/pinger/beacons.txt&lt;/BeaconListURL&gt">http://www-iepm.slac.stanford.edu/pinger/beacons.txt&lt;/BeaconListURL&gt</a>;
+    &lt;/BeaconListConfig&gt;</pre>
+<dt><strong><a name="item_%3cdorandomwait%3e_%3a%3a%3d_boolean">&lt;doRandomWait&gt; ::= BOOLEAN</a></strong><br />
+</dt>
+<dd>
+Using the values 'true' and 'false' it is possible to configure pinger to wait a random amount of time inside each ping interval specified by &lt;waitInterval&gt;. Given for instance a waitInterval of 30 minutes and 'true' for doRandomWait, PingER2 will start pinging hosts anywhere inside each 30 minutes interval. This option is usefull if regular pings every day at the same time are not desireable (for instance if they might be registered by the network administrator of the host ping or interfere with other regular activities as backups, etc.).
+</dd>
+<dd>
+<p>Example:
+</p>
+</dd>
+<dd>
+<pre>
+
+    &lt;doRandomWait&gt;true&lt;/doRandomWait&gt;</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_%3cwaitinterval%3e_%3a%3a%3d_time_in_minutes">&lt;waitInterval&gt; ::= TIME IN MINUTES</a></strong><br />
+</dt>
+<dd>
+Specifies the amount of time to wait between runs of PingER2. Please notice that since PingER2 uses Cron to handle the activiation of the pinger2.pl script in regular intervals, it is necessary that after each change to the value of waitInterval the script installCron.pl needs to be executed. The script will update the existing cron-table by replacing the current pinger2.pl entry with the new values. The amount of time should be specified in minutes, but can alternatively also be given using the modifiers hour, day, week or month.
+</dd>
+<dd>
+<p>Example:</p>
+</dd>
+<dd>
+<pre>
+    &lt;waitInterval&gt;1 hour&lt;/waitInterval&gt;</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_%3chostlist%3e">&lt;HostList&gt;</a></strong><br />
+</dt>
+<dd>
+This field holds any number of &lt;Host&gt;-entries which will get called by PingER2. In contrast to &lt;BeaconList&gt; these entries are not overridden by the refresh as defined in &lt;BeaconListConfig&gt;. That means that all custom hosts that are to be monitored in addition to the BeaconList should go into this list.
+</dd>
+<dd>
+<p>Example:</p>
+</dd>
+<dd>
+<pre>
+    &lt;HostList&gt;
+        &lt;Host&gt;
+            &lt;Name&gt;www.cc.gatech.edu&lt;/Name&gt;
+        &lt;/Host&gt;
+        &lt;Host&gt;
+            &lt;Name&gt;www.foo.bar&lt;/Name&gt;
+            &lt;IP&gt;192.168.1.1&lt;/IP&gt;
+        &lt;/Host&gt;
+    &lt;/HostList&gt;</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_%3cbeaconlist%3e">&lt;BeaconList&gt;</a></strong><br />
+</dt>
+<dd>
+This tag groups any number of &lt;Host&gt;-entries which will get called by PingER2. In contrast to &lt;HostList&gt; these entries are overridden by the refresh as defined in &lt;BeaconListConfig&gt;. Customizations of the list of hosts to be pinged should go into the &lt;HostList&gt;.
+</dd>
+<dd>
+<p>Example:</p>
+</dd>
+<dd>
+<pre>
+    &lt;BeaconList&gt;
+        &lt;Host&gt;
+            &lt;IP&gt;134.79.18.21&lt;/IP&gt;
+            &lt;EnableDNSCache&gt;false&lt;/EnableDNSCache&gt;
+            &lt;Ping&gt;
+                &lt;NumPackets&gt;50&lt;/NumPackets&gt;
+            &lt;/Ping&gt;
+            &lt;Name&gt;ping.slac.stanford.edu&lt;/Name&gt;
+        &lt;/Host&gt;
+        &lt;Host&gt;
+            &lt;IP&gt;131.225.9.20&lt;/IP&gt;
+            &lt;EnableDNSCache&gt;false&lt;/EnableDNSCache&gt;
+            &lt;Ping&gt;
+                &lt;NumPackets&gt;20&lt;/NumPackets&gt;
+            &lt;/Ping&gt;
+            &lt;Name&gt;fnal.fnal.gov&lt;/Name&gt;
+        &lt;/Host&gt;
+    &lt;/BeaconList&gt;</pre>
+</dd>
+<p></p></dl>
+<dt><strong><a name="item_sub%2dentries%3a">Sub-Entries:</a></strong><br />
+</dt>
+<dl>
+<dt><strong><a name="item_%3chost%3e_%3a%3a%3d_xs%3acomplextype">&lt;Host&gt; ::= xs:complexType</a></strong><br />
+</dt>
+<dd>
+Using this tag allows the configuration of individual host. The most important sub-tag is &lt;Name&gt;. Using this name PingER2 can effectively determine the IP and will assume default settings for the rest of the configuration parameters.
+</dd>
+<dd>
+<p>Sub-Tags:</p>
+</dd>
+<dl>
+<dt><strong><a name="item_%3cenablednscache%3e_%3a%3a%3d_boolean">&lt;EnableDNSCache&gt; ::= BOOLEAN</a></strong><br />
+</dt>
+<dd>
+If set to true this entry will enable the internal DNS-caching functionality. This means that PingER2 will store IPs to guard against DNS-failure.
+</dd>
+<dd>
+<p>Example:</p>
+</dd>
+<dd>
+<pre>
+    &lt;EnableDNSCache&gt;true&lt;/EnableDNSCache&gt;</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_%3cenabled%3e_%3a%3a%3d_boolean">&lt;Enabled&gt; ::= BOOLEAN</a></strong><br />
+</dt>
+<dd>
+A host can be excluded from being pinged by setting this value to false.
+</dd>
+<dd>
+<p>Example:</p>
+</dd>
+<dd>
+<pre>
+    &lt;Enabled&gt;false&lt;/Enabled&gt;</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_%3cip%3e_%3a%3a%3d_a%7cquad%2da_ip_address">&lt;IP&gt; ::= A|Quad-A IP Address</a></strong><br />
+</dt>
+<dd>
+PingER2 will try to determine the IP address of the host using a DNS lookup when possible. To circumvent this lookup PingER2 provides this tag to statically assign an IP. Be aware that PingER2 also provides a DNS-cache which will utilize this field to store queried DNS-information.
+</dd>
+<dd>
+<p>Example:</p>
+</dd>
+<dd>
+<pre>
+    &lt;IP&gt;192.168.1.2&lt;/IP&gt;</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_%3clogtype%3e_%3a%3a%3d_full%7c%2e%2e%2e">&lt;LogType&gt; ::= full|...</a></strong><br />
+</dt>
+<dd>
+Determines how much of the statistics gathered from pinging this host will be stored in the data output. If the value is set to 'full' then all available information are dumped into the data directory. All other values reduce the output to ``min/max/avg''.
+</dd>
+<dd>
+<p>Example:</p>
+</dd>
+<dd>
+<pre>
+    &lt;LogType&gt;minimal&lt;/LogType&gt;</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_%3cname%3e_%3a%3a%3d_string">&lt;Name&gt; ::= STRING</a></strong><br />
+</dt>
+<dd>
+The name of the host to be pinged. This is the essential tag that needs to be supplied for all &lt;Host&gt;s.
+</dd>
+<dd>
+<p>Example:</p>
+</dd>
+<dd>
+<pre>
+    &lt;Name&gt;www.cc.gatech.edu&lt;/Name&gt;</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_%3cprotocol%3e_%3a%3a%3d_ipv4%7cipv6">&lt;Protocol&gt; ::= IPV4|IPV6</a></strong><br />
+</dt>
+<dd>
+Controls IPv4 vs. IPv6 behavior in PingER2. To ping a individual host with both IPV4 and IPV6 the corresponding host entry has to be duplicated.
+</dd>
+<dd>
+<p>Example:</p>
+</dd>
+<dd>
+<pre>
+    &lt;Protocol&gt;IPV4&lt;/Protocol&gt;</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_%3cwaittime%3e_%3a%3a%3d_integer">&lt;WaitTime&gt; ::= INTEGER</a></strong><br />
+</dt>
+<dd>
+Determines the amount of time to be wait between individual pings. Be aware that this will increase the time pingER2 needs to complete it's task.
+</dd>
+<dd>
+<p>Example:</p>
+</dd>
+<dd>
+<pre>
+    &lt;WaitTime&gt;1&lt;/WaitTime&gt;</pre>
+</dd>
+<p></p></dl>
+<p>Complex Tags (still inside &lt;Host&gt;)</p>
+<dl>
+<dt><strong><a name="item_%3calarm%3e">&lt;Alarm&gt;</a></strong><br />
+</dt>
+<dd>
+If PingER2 fails to reach the host or while determining the IP, Alarm offers a way to configure PingER2 to notify the maintainer of the local PingER version. This feature should be seen as warning tool or as a convenience feature for the beacon list maintainer.
+</dd>
+<dl>
+<dt><strong><a name="item_%3ctimetonotification%3e_%3a%3a%3d_time">&lt;TimeToNotification&gt; ::= TIME</a></strong><br />
+</dt>
+<dd>
+Determines the amount of time PingER will ignore failures. When the interval passed without a successful ping or DNS-lookup then alarm will be invoked.
+</dd>
+<dd>
+<p>Example:</p>
+</dd>
+<dd>
+<pre>
+    &lt;TimeToNotification&gt;12 hours&lt;/TimeToNotification&gt;</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_%3cenabled%3e_%3a%3a%3d_true%7cfalse">&lt;Enabled&gt; ::= true|false</a></strong><br />
+</dt>
+<dd>
+This tag is used by pingER2 to switch off the Alarm when Snoozing is diabled or can be used by the maintainer to do the same manually.
+</dd>
+<dd>
+<p>Example:</p>
+</dd>
+<dd>
+<pre>
+    &lt;Enabled&gt;true&lt;/Enabled&gt;</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_%3csnooze%3e_%3a%3a%3d_true_%7c_false">&lt;Snooze&gt; ::= true | false</a></strong><br />
+</dt>
+<dd>
+With this feature PingER2 tries to simulate an alarm clock that goes back to sleep after the alarm rings only to ring again after the alarm interval passed again. If snooze is disabled an alarm will only trigger once. The alarm feature does not interfere with the host being pinged, it's just a convenience.
+</dd>
+<dd>
+<p>Example:
+</p>
+</dd>
+<dd>
+<pre>
+
+    &lt;Snooze&gt;true&lt;/Snooze&gt; &gt;&gt;</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_%3ctimeoffirstfailure%3e_%3a%3a%3d_integer">&lt;TimeOfFirstFailure&gt; ::= INTEGER</a></strong><br />
+</dt>
+<dd>
+This tag will hold the value in seconds after 1970 since when the failure occurred. PingER2 uses this value to determine when the alarm has to go off.
+</dd>
+<dd>
+<p>Example:</p>
+</dd>
+<dd>
+<pre>
+    &lt;TimeOfFirstFailure&gt;1077812075&lt;/TimeOfFirstFailure&gt;</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_%3calarmcmd%3e_%3a%3a%3d_string">&lt;AlarmCmd&gt; ::= STRING</a></strong><br />
+</dt>
+<dd>
+The AlarmCmd is triggered whenever a host exceeded the specified alarm interval. This parameter should contain %message which will be replaced before executing the command. The first example provided appends the error message to the log.file while the second sends an email to the account holder under which PingER2 is run.
+</dd>
+<dd>
+<p>Example:</p>
+</dd>
+<dd>
+<pre>
+    &lt;AlarmCmd&gt;echo '%message' &gt;&gt; log.file&lt;/AlarmCmd&gt;
+    &lt;AlarmCmd&gt;echo -e '%message' | mail `whoami` -s &quot;PingER2 Error Message&quot;&lt;/AlarmCmd&gt;</pre>
+</dd>
+<p></p></dl>
+<dt><strong><a name="item_%3cping%3e">&lt;Ping&gt;</a></strong><br />
+</dt>
+<dd>
+This complex tag holds all information that determines how to ping a individual host. It is possible to have multiple &lt;Ping&gt; entries per &lt;Host&gt;. PingER2 will traverse them one by one. The following two entries get grouped inside a &lt;Ping&gt;-entry:
+</dd>
+<dl>
+<dt><strong><a name="item_%3cnumpings%3e_%3a%3a%3d_integer">&lt;NumPings&gt; ::= INTEGER</a></strong><br />
+</dt>
+<dd>
+The number of pings to send to the host. Notice that a large number will also take a respective amount of time, since pings are spaced with a time from &lt;WaitTime&gt;.
+</dd>
+<dd>
+<p>Example:</p>
+</dd>
+<dd>
+<pre>
+    &lt;NumPings&gt;10&lt;/NumPings&gt;</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_%3cpacketsize%3e_%3a%3a%3d_integer">&lt;PacketSize&gt; ::= INTEGER</a></strong><br />
+</dt>
+<dd>
+The size in byte of the payload sent to the host as part of the ICMP echo request. A large packet size may overload poor connections especially in developing countries.
+</dd>
+<dd>
+<p>Example:</p>
+</dd>
+<dd>
+<pre>
+    &lt;PacketSize&gt;100&lt;/PacketSize&gt;</pre>
+</dd>
+<p></p></dl>
+<p>Example for Ping:
+</p>
+<pre>
+
+    &lt;Ping&gt;
+        &lt;PacketSize&gt;1000&lt;/PacketSize&gt;
+        &lt;NumPings&gt;10&lt;/NumPings&gt;
+    &lt;/Ping&gt;</pre>
+</dl>
+<dt><strong><a name="item_%3cdefaulthost%3e">&lt;DefaultHost&gt;</a></strong><br />
+</dt>
+<dd>
+This tag is structured exactly as &lt;Host&gt; but provides opportunity to provide default values, i.e. whenever a configuration tag is not found in a &lt;Host&gt; entry the &lt;DefaultHost&gt; will be queried. This saves disk space for the configuration file and makes it more easier to read and modify.
+</dd>
+<p></p></dl>
+</dl>
+<p>
+</p>
+<hr />
+<h1><a name="description_of_internal_variables">Description of Internal Variables</a></h1>
+<p>The following variable are used inside the PingER script that might be interesting when extending PingER2.</p>
+<dl>
+<dt><strong><a name="item_loglevel">logLevel</a></strong><br />
+</dt>
+<dd>
+Represents the amount of logging done by PingER2. From 0 to 10 where 0 is 0 is no and 10 is maximal logging.
+</dd>
+<p></p>
+<dt><strong><a name="item_logfile">logFile</a></strong><br />
+</dt>
+<dd>
+Handle to the file which is used for logging.
+</dd>
+<p></p>
+<dt><strong><a name="item_config">config</a></strong><br />
+</dt>
+<dd>
+This holds the data structure representation of the data unserialized from the configuration file using XML::Simple.
+</dd>
+<p></p>
+<dt><strong><a name="item_beaconlist%2c_hostlist">beaconList, hostList</a></strong><br />
+</dt>
+<dd>
+These list are arrays of the respective hosts.
+</dd>
+<p></p>
+<dt><strong><a name="item_defaulthost">defaultHost</a></strong><br />
+</dt>
+<dd>
+This variable holds the datastructure representing the fall-back options if the host does not specify it.
+</dd>
+<p></p>
+<dt><strong><a name="item_datadirectoy">dataDirectoy</a></strong><br />
+</dt>
+<dd>
+Retrieved from the configuration db. All data output is dumped into this directory.
+</dd>
+<p></p>
+<dt><strong><a name="item_pingv4cmd%2c_pingv6cmd%2c_dnsv4cmd%2c_dnsv6cmd">pingV4Cmd, pingV6Cmd, dnsV4Cmd, dnsV6Cmd</a></strong><br />
+</dt>
+<dd>
+Command strings to the respective commands. Should contain % quantifiers.
+</dd>
+<p></p>
+<dt><strong><a name="item_srcname%2c_srcip">srcName, srcIP</a></strong><br />
+</dt>
+<dd>
+Information representing the source machine.
+</dd>
+<p></p>
+<dt><strong><a name="item_processcount%2c_maxprocesscount">ProcessCount, maxProcessCount</a></strong><br />
+</dt>
+<dd>
+Number of current and maximal processes performing ping-queries.
+</dd>
+<p></p></dl>
+<p>
+</p>
+<hr />
+<h1><a name="description_of_internal_functions">Description of Internal Functions</a></h1>
+<p>
+</p>
+<h2><a name="checkbeaconconfiguration()"><code>checkBeaconConfiguration()</code></a></h2>
+<p>This function will retrieve information from the web about beacons and updates entries in the <a href="#item_%3cbeaconlist%3e"><code>&lt;BeaconList&gt;</code></a>.</p>
+<p>Caution: All existing sub-entries of <a href="#item_%3cbeaconlist%3e"><code>&lt;BeaconList&gt;</code></a> will be overriden. Entries that are to survive update should to into <a href="#item_%3chostlist%3e"><code>&lt;HostList&gt;</code></a></p>
+<p>In: The function takes no parameters.</p>
+<p>Out: The function returns no value.</p>
+<p>
+</p>
+<h2><a name="parsetime(datestring)"><code>parseTime(dateString)</code></a></h2>
+<p>This function will take it''s input parameter and transform it into seconds. ParseTime takes a string and extracts a number and an optional quantifier. The following time quantifiers are understood.</p>
+<ul>
+<li></li>
+mi = Minutes = 60 seconds
+<p></p>
+<li></li>
+mo = Months = 30 * 24 * 60 * 60 seconds
+<p></p>
+<li></li>
+h = Hours = 60 * 60 seconds
+<p></p>
+<li></li>
+d = Days = 24 * 60 * 60 seconds
+<p></p>
+<li></li>
+w = Weeks = 7 * 24 * 60 * 60 seconds
+<p></p>
+<li></li>
+y = Years = 365 * 24 * 60 * 60 seconds
+<p></p></ul>
+<p>In: String with a time value.</p>
+<p>Out: Time in seconds.</p>
+<p>
+</p>
+<h2><a name="getattributewithalternative(main,alternative,attributename)"><code>getAttributeWithAlternative(main,alternative,attributeName)</code></a></h2>
+<p>Thefunction will retrieve an attribute from a given XML::Simple data structure. If the attribute is not available, the function will fall back onto an alternative data structure.</p>
+<p>In: Main data structure, Alternative data structure and attribute name</p>
+<p>Out: Value of the retrieved attribute or undef if the item could not be found in both the main and alternative data structure.</p>
+<p>
+</p>
+<h2><a name="gethostattribute(host,attribute)"><code>getHostAttribute(host,attribute)</code></a></h2>
+<p>Retrieves an attribute from the given host or falls back onto the default host if the attribute could not be found.</p>
+<p>In: Host reference and attribute name.</p>
+<p>Out: Value of the retrieved host attribute or the value given by the defaultHost for that attribute. Undef if neither is available.</p>
+<p>
+</p>
+<h2><a name="getgroupattribute(host,group,attribute)"><code>getGroupAttribute(host,group,attribute)</code></a></h2>
+<p>Retrieves an attribute in a sub-entry of the given host or looks that entry up in the default host. That function is necessary for more complex lookups into the host/defaultHost data structures.</p>
+<p>In: Host reference, group name and attribute name.</p>
+<p>Out: The group attribute if found in the host, the sub-entry of the defaultHost/group or undef.</p>
+<p>
+</p>
+<h2><a name="setgroupattribute(host,group,attribute,value)"><code>setGroupAttribute(host,group,attribute,value)</code></a></h2>
+<p>Sets an attribute in a sub-entry of the given host. If the group does not exists it will be created.</p>
+<p>In: Host reference, group name, attribute name and value.</p>
+<p>Out: The function does not return any value.</p>
+<p>
+</p>
+<h2><a name="retrieveandcheckfordefault(tagname,_defaultvalue)">retrieveAndcheckForDefault(tagName, defaultValue)</a></h2>
+<p>Will try to retrieve a tag with the given name from the main group.</p>
+<p>If the tag is not available it will set it to the value passed as the second parameter.</p>
+<p>In any case the function returns the value of the tag in the main group.</p>
+<p>
+</p>
+<h2><a name="getlist(listname)"><code>getList(listName)</code></a></h2>
+<p>The function will return the given list from the configuration file and initializes it with an empty entry in case the list did not exist.</p>
+<p>In: Name of the list to retrieve.</p>
+<p>Out: An array of the entries in the list. If the list is empty or did not exist an empty array is returned.</p>
+<p>
+</p>
+<h2><a name="checkdefaulthostconfig(host)"><code>checkDefaultHostConfig(host)</code></a></h2>
+<p>This function will check and initialize the default values of the defaultHost entry. This is important because several functions lateron rely on results from the get*Attribute functions.</p>
+<p>In: The reference to the default host.</p>
+<p>Out: This function does not return any value.</p>
+<p>
+</p>
+<h2><a name="alarm(host,message)"><code>alarm(host,message)</code></a></h2>
+<p>The alarm function can be called anytime a problematic situation has occured. It will lookup the alarm configuration and trigger the alarmCmd if alarm time has exceeded. There is oneshot-functionality embedded in the alarm-system, that allows for notifications to be triggered only once.</p>
+<p>Input: Host that has produced an error and the error message.</p>
+<p>Output: This function does not produce any results.</p>
+<p>
+</p>
+<h2><a name="alarmnotify(host,message)"><code>alarmNotify(host,message)</code></a></h2>
+<p>Does bypass the tolerance function of the alarm-system and directly dispatches a notification for the given host. Snoozing/Oneshot-functionality is maintained.</p>
+<p>Input: The host for which an alarm was triggered and the message to send to the administrative team.</p>
+<p>Output: This function does not produce any results.</p>
+<p>
+</p>
+<h2><a name="getip(host)"><code>getIP(host)</code></a></h2>
+<p>Performs an DNS-lookup using the ipv4 or ipv6 command and retrieves the address as a string in A/AAAA format.</p>
+<p>Input: The host for which the DNS-lookup shall be performed.</p>
+<p>Output: The IP in A/AAAA format.</p>
+<p>
+</p>
+<h2><a name="updatednscache(host)"><code>updateDNSCache(host)</code></a></h2>
+<p>Retrieves a new IP address for the given host and renews the cache using the retrieved address.</p>
+<p>Input: The host whose cache is to be updated.</p>
+<p>Output: This function does not produce any results.</p>
+<p>
+</p>
+<h2><a name="querydnscache(host)"><code>queryDNSCache(host)</code></a></h2>
+<p>This function implements the query strategy for retrieving IP addresses. All the key logic of that strategy can be found inside this function. The current strategy can be described as follows:</p>
+<ul>
+<li></li>
+A DNS lookup is always performed, regardless of whether the DNS-cache is on or off. A warning will always be issued when the DNS-lookup fails.
+<p></p>
+<li></li>
+If the DNS-Cache is ON the following decision-path is taken:
+<ul>
+<li></li>
+if cached IP and retrieved IP are identical this IP is returned.
+<p></p>
+<li></li>
+if cache and DNS-lookup disagree then the alarm function of the host is called and the new DNS entry takes the place of the cached one and is also returned.
+<p></p></ul>
+<li></li>
+If the DNS-Cache is OFF the following decision path happens:
+<ul>
+<li></li>
+If an IP has been given in the configuration it will always be prefered over the DNS-lookup. Appropriate warnings will be generated.
+<p></p>
+<li></li>
+If no IP is given the lookup-result will be returned.
+<p></p></ul>
+</ul>
+<p>Input: The host to query an IP for.</p>
+<p>Output: An IP for the host or undefined.</p>
+<p>
+</p>
+<h2><a name="doping(ip,interval,size,numpings,host,resultsmatter)"><code>doPing(ip,interval,size,numPings,host,resultsMatter)</code></a></h2>
+<p>This function sends the actual pings.  It relies on the configured ping-tools to do the dirty work.</p>
+<p>Input:</p>
+<ul>
+<li></li>
+ip = The IP of the host to ping.
+<p></p>
+<li></li>
+interval = The interval between individual pings.
+<p></p>
+<li></li>
+size = The size of the individual ping packets.
+<p></p>
+<li></li>
+numPings = The number of pings of the given size to send.
+<p></p>
+<li></li>
+host = The host structure for the IP address to ping. Needed to select IPV4/6 and to route alarm-functionality appropiately.
+<p></p>
+<li></li>
+resultsMatter = Since the first ping of each batch is just used to prime the communication-channel this flag can be used to disable the logging of result.
+<p></p></ul>
+<p>Output: Will return either a list of the results or undefined on failure.</p>
+<p>
+</p>
+<h2><a name="log_it(....)"><code>log_it(....)</code></a></h2>
+<p>This subroutine logs entries to the ping record file. It opens the file exclusively so that other processes will have to wait until this write is finished.</p>
+<p>Input: A huge number of parameters that hold all the statistics that need to be logged (8-15 parameters to be exact).</p>
+<p>Output: -1 on error, undefined otherwise.</p>
+<p>
+</p>
+<h2><a name="pinghost(host)"><code>pingHost(host)</code></a></h2>
+<p>Ping the given host accordingly to the entries given in the configuration file. All calls to doPing are concurrently using a server/client pipe.</p>
+<p>Input: The host to be pinged.</p>
+<p>Output: This function does not return any result.</p>
+<p>
+</p>
+<h2><a name="logger(message,loglevel)"><code>logger(message,logLevel)</code></a></h2>
+<p>Will print the message passed if the set logLevel is high enough to surpass the current setting.</p>
+<p>Input: The message and the logLevel.</p>
+<p>Output: This function does not return any results.</p>
+<p>
+</p>
+<h2><a name="waitforchild(pipeinformation)"><code>waitForChild(PipeInformation)</code></a></h2>
+<p>Will wait for one child, read the information the child produced and copy the state the child produced into the configuration xml setting.</p>
+<p>Input: The list of all processes spawned from the current one.</p>
+<p>Output: This function does not produce any results.</p>
+<p>
+</p>
+<h2><a name="pingallhosts()"><code>pingAllHosts()</code></a></h2>
+<p>This function will ping all hosts given in both the host- and the beacon-list.</p>
+<p>Input: This function does not expect any parameters.</p>
+<p>Output: This function does not return any results.</p>
+<p>
+</p>
+<hr />
+<h1><a name="copyright">COPYRIGHT</a></h1>
+<p>PingER2 is based on PingER from SLAC.
+
+</p>
+<p>2004 - Christopher Ozbek - <a href="mailto:cozbek@cc.gatech.edu">cozbek@cc.gatech.edu</a>
+
+</p>
+<p>This is free software. Redistribute and modify under the same license as Perl itself.
+
+</p>
+
+</body>
+
+</html>

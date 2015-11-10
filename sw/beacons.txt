@@ -1,0 +1,186 @@
+# Comments following the site name, may contain a Beacon identifier in 
+# brackets of the form [Beacon - sub-comment] indicating that 
+# this is a Beacon site. e.g.
+# ns2.slac.stanford.edu # [Beacon - ESnet & monitoring site; add 1/1/95]
+# Beacons requirements: Monitoring site
+# Beacons requirements: < 2% unreachability for several months, 
+# Beacons requirements: interest to ESnet or HENP, 
+# e.g. a Beacon  could be in Particle Data Group (PDG) book, or a collaborator in major HENP experiment 
+# Beacons requirements: represents a community
+# The Beacons list is generated from the full offsite.nodes file using
+# grep Beacon /afs/slac/www/comp/net/mon/offsite.nodes >! /afs/slac/g/www/www-iepm/pinger/beacons-new.txt
+# First non draft Beacon list distributed 5/11/98.
+# Beacons updated 5/19/98 - replaced ns.msu.ru with ns.itep.ru
+# Beacons updated 8/9/99 - add ping.lucas.lu.se, ns.riken.go.jp, df.uba.ar, nicuniandes.edu.co, tifr.res.in
+#                           removed Beacons nic.nordu.net & radius3.singnet.com.sg due to rate limiting ICMP
+#                           replaced Beacon ns2.slac.stanford.edu with ping.slac.stanford.edu, 
+#                                and Beacon bnl.gov with ping.bnl.gov, d-name-2.cern.ch with ping.cern.ch,
+#                                and Beacon sgiserv.rmki.kfki.hu with ping.rmki.kfki.hu
+#                                and Beacon d-name-2.cern.ch with ping.cern.ch
+#                                and Beacon tuia.dmz.waikato.ac.nz with ns1.waikato.ac.nz
+# Beacons updated 8/16/99 - replaced Beacon hephp1.rl.ac.uk with icfamob.rl.ac.uk
+#                                and Beacon wboson.physics.colostate.edu with phys150.physics.colostate.edu
+# Beacons updated 8/18/99 - add argus.stanford.edu
+# Second non draft Beacon list distributed 8/18/99
+# Beacons updated 9/5/99  - add buproxy.ac.il, znsun1.ifh.de 
+# Beacons updated 9/12/99 - add cloud.kaist.kr.apan.net
+# --------------- New Beacons Updates June 2000 -------------------                                
+# The last set of Beacons was finalized about 9 months ago. 
+# Now (June 2000) the Beacons need to reflect that have over doubled the number of countries monitored (72) 
+# and increased the # of monitoring sites and need to augment the Beacon sites.
+# There have also been some corrections needed for the existing Beacon sites 
+# As of the release of this Beacon list we have 28 monitoring sites, 
+# 75 monitored countries, over 2200 pairs and 74 Beacons.
+# The list below shows the changes made for the June 2000 Beacon list compared
+# to the August-September 1999 Beacon list.
+# Beacons removed lobelia.physics.wisc.edu 198.150.3.2, replaced by ping.cs.wisc.edu
+# Beacons added ping.cs.wisc.edu as Monitoring site, PPDG collaborator and Condor, Midwest VBNS university on STAR-TAP 
+# Beacons added icfamon.dl.ac.uk Monitoring site
+# Beacons removed sky.inp.nsk.su at request of Serge Belov of NSK
+# Beacons removed ns.riken.go.jp, not responding
+# Beacons added ping.riken.go.jp 6/15/00 by Cottrell at request of ichihara@rarfaxp.riken.go.jp (Takashi Ichihara) 
+# Beacons added Rainbow.inp.nsk.su at request of Serge Belov of NSK, this is (1/12/2000) a monitoring site
+# Beacons added www.uib.no for Norway, University of Bergen, in PDG, monitored by ANL & SLAC; Add 2/20/00
+# Beacons added ping.isnet.is for Iceland, critical ISnet server; Add 2/20/00
+# Beacons added nikhefh.nikhef.nl for Netherlands, major HENP site, PDG, monitored  by ANL, CERN, CNAF, DESY, DL, HEPNRC, KFKI, RL, SLAC; Add 2/20/00
+# Beacons added asrv1.iihe.ac.be an alphaserver 4000 of HEP group at university
+# Beacons added ns.iaea.or.at for Austria, name server at IAEA, Vienna, PDG, site monitored by ANL, BNL, SLAC; 1st mon by SLAC 9/12/99
+# Beacons added beta.carnet.hr for Croatia, mail gateway, country in PDG, site monitored by ANL, SLAC; 1st mon by SLAC 9/11/99
+# Beacons added www.ijs.si for Slovenia, PDG host, country monitored by ANL, ; 1st mon by SLAC 9/1/98 following CHEP98 contact
+# Beacons added ba.sanet.sk for Slovakia, mail gateway, PDG country, monitored by ANL, SLAC; 1st mon by SLAC 9/11/99
+# Beacons added kadri.ut.ee for Estonia, mail gateway, HENP major exp collab; 1st mon by SLAC 9/11/99
+# Beacons added www.lu.lv for Latvia; 1st mon by SLAC 9/14/99
+# Beacons added ns.kiev.ua for Ukraine, name server, PDG site; 1st mon by SLAC 9/11/99
+# Beacons added dns1.vn for Vietnam, name server for VNU, PDG country 
+# Beacons added www.dcc.uchile.cl for Chile, PDG site; 1st mon SLAC 12/6/99
+# Beacons added ultra.edu.uy for Uruguay, name server for edu.uy, PDG site; 1st mon by SLAC 11/20/99
+# Beacons added www.uct.ac.za for South Africa, ITS (informateation technology services) at UCT (university of Cape Town), PDG site; 1st mon by SLAC 11/8/99
+# Beacons added frcu.eun.eg for Egypt, Cairo University, PDG site; 1st mon by SLAC 11/20/99
+# ------------- Beacons Post June 23, 2000 -------------
+# Beacons removed ns1.waikato.ac.nz, looks like it is rate limiting, 6/23/00
+# Beacons added pinger3.cs.waikato.ac.nz replaced ns1.waikato.ac.nz, 6/23/00
+# ------------- Beacons Post December 8, 2000 ----------
+# Beacons removed df.uba.ar, does not appear to be consistently answering pings since Jul00, 12/8/00
+# Beacons added eros.cnea.gov.ar, ANL, JLAB & SLAC are using it successfully, 12//8/00
+# Beacons removed www.dcc.uchile.cl, does not appear to respond to pings since Oct00, 12/8/00
+# Beacons added www.puc.cl, ANL, JLAB & SLAC are successfully using, 12/8/00
+# Beacons removed nic.uniandes.edu.co, does not appear to respond to pings since Sep00, 12/8/00
+# Beacons added www.uniandes.edu.co, CERN is successfully using, 12/8/00
+# -------------- Beacons Post October 19, 2001 ----------
+# Beacons removed oceana.sdsc.edu, does not respond. 10/4/01
+# Beacons added multivac.sdsc.edu, SC2001 coolaborator
+# Beacons removed ns.iaea.or.at, no response since April 2001.
+# Beacons removed buproxy.ac.il, per Oded Comay 8/15/01
+# Beacons added wwwproxy.ac.il, per Oded Omay 8/15/01
+# Beacons removed ping.isnic.il, per Marius Olafsson 8/15/01 
+# Beacons added ping.rhnet.is, per Marius Olafsson 8/15/01
+# Beacons removed www.rcnp.osaka-u.ac.jp, no response since Jan 2001, pings blocked
+# Beacons added wiggum.mcs.anl.gov, Monitoring site, PPDG, SC2001, Add by Cottrell 10/19/01
+# Beacons added jlab7.jlab.org, PPDG, SC2001
+# Beacons removed www.uniandes.edu.co no response since Nov 1, can get to web page but ping blocked and no contact person
+# Beacons removed r02hp04.desy.de by jerrodw 4/8/02
+# Beacons added ping.desy.de.by Jerrodw 4/8/02
+# Beacons removed netdb3.es.net by jerrodw 5/1/02
+# Beacons added statmach5.es.net by jerrodw 5/1/02
+# -------------- Beacons Post Sep 9, 2002 ---------------
+# Beacons removed www.ph.unimelb.edu.au, admin blocked 9/9/02
+# Beacons added www.unimelb.edu.au to replace www.ph.unimelb.edu.au
+# Beacons removed pinger3.cs.waikato.ac.nz, nslookup fails, site renumbered
+# Beacons added amp-kiwi.cs.waikato.cs.ac.nz, per Tony McGregor
+# Beacons removed nikhefh.nikhef.nl, failed nslookup 9/9/02
+# Beacons added keeshond.nikhef.nl to replace nikhefh
+# Beacons added www.uoa.gr, now reliable enough, represents Greece
+# Beacons added www.lu.se, reliable requested by ESnet NP people 9/9/02
+# Beacons removed ping.lafex.cbfp.br, no longer vaialble by name 11/11/02
+# Beacons added d0br1.lafex.br to replace lafex.cbpf.br 11/11/02
+ping.slac.stanford.edu 134.79.18.21 send=50 # [Beacon - ESnet W. Coast & monitoring site; used to be ns2.slac.stanford.edu]
+fnal.fnal.gov 131.225.9.20 send=20 # [Beacon - ESnet MidWest & Monitoring site]
+ping.bnl.gov 130.199.5.29 send=50 # [Beacon - ESnet E. Coast & monitoring site; Replaced bnl.gov 8/1/99]
+wwwmics.er.doe.gov 192.73.213.17 send=20 # [Beacon - DOE/MICS ESnet monitoring site]
+wiggum.mcs.anl.gov 140.221.11.99# [Beacon - Monitoring site, PPDG, SC2001] Add by Cottrell 10/19/01, SC2001 member
+hep505.cithep.caltech.edu 131.215.126.149 send=50# [Beacon - ESnet university & S. Cal]                    
+argus.stanford.edu 171.64.2.230 send=50 # [Beacon - I2 monitoring site; Add 8/18/99]
+bovine.uoregon.edu 128.223.21.104 send=50# [Beacon - NW US non vBNS site]
+hephp1.ucsd.edu 132.239.69.52 # [Beacon - UC & vBNS S. California site]
+# unpingable since July. Removed 10/04/01 by Warren. oceana.sdsc.edu 132.249.40.200 # [Beacon - W. US vBNS site, major center of Internet monitoring]
+multivac.sdsc.edu 132.249.20.57 # [Beacon - SC2001 collaborator, PPDG & CAIDA, NLANR] Add by Cottrell 10/19/01, SC2001 member
+scipp.ucsc.edu 128.114.130.20 send=50# [Beacon - Univ Cal net & N. Cal site]
+sitka.triumf.ca 142.90.115.2 send=20# [Beacon - Canada W. Coast CA*net II & monitoring site]
+pizero.colorado.edu 128.138.133.2 send=50 # [Beacon - Mountain zone US & vBNS .edu site]            
+#! wboson.physics.colostate.edu # [Beacon - Abilene Mountain zone university site]
+phys150.physics.colostate.edu 129.82.140.150 # [Beacon - Abilene Mountain zone site; Replacement for wboson requested by Walter Toki 3/31/99]
+lns62.lns.cornell.edu 128.84.47.62 # [Beacon - US NSF Lab vBNS Cleveland GigaPop]
+physuna.phs.uc.edu 129.137.4.3 # [Beacon - Abilene Non VBNS East UC University] 
+enterprise.phys.vt.edu 128.173.176.54 # [Beacon - vBNS for Network Virginia] added by Warren 1/13/98 to replace vtinte
+ping.cs.wisc.edu 144.92.128.196 # [Beacon - Monitoring site, PPDG collaborator and Condor] 
+www.hep.uiuc.edu 128.174.118.162 # [Beacon - US Mid-west University vBNS Chicago GigaPOP site]
+ns1.utexas.edu 128.83.185.40 # [Beacon - vBNS Texas]
+#!(unpingable)dukhet.phy.duke.edu 152.3.57.20 # [Beacon - vBNS Atlanta]
+yalph2.physics.yale.edu 198.125.138.2 # [Beacon - vBNS for Boston area GigaPOP]
+netserver.net.cmu.edu 128.2.35.50 send=20# [Beacon - E. US Monitoring university, vBNS Cleveland GigPOP]
+cepheid.physics.utoronto.ca 128.100.78.18 # Multi-homed ! [Beacon - E. Canada Ca*net II site]
+ftp.physics.carleton.ca 134.117.14.16 # [Beacon - E. Canada & Monitoring site]
+#!hephp1.rl.ac.uk # [Beacon - UK JANET, England & Monitoring site]  
+icfamon.rl.ac.uk 130.246.135.152 send=20# [Beacon - UK JANET, England & Monitoring site; Replaced hephp1.rl.ac.uk 8/16/99]
+dns1.gla.ac.uk 130.209.4.16 send=20# [Beacon - UK JANET, Scotland site]
+icfamon.dl.ac.uk 193.62.127.224 send=20 size=100 # [Beacon - UK Janet, England & Monitoring site; Add March 2000]
+lnfnet.lnf.infn.it 193.206.84.12 # [Beacon - Italy, major HENP Lab]
+dxcnaf.cnaf.infn.it 131.154.3.1 send=20# [Beacon - Monitoring & International connection & network backbone site]
+ccpntc3.in2p3.fr 134.158.69.191 send=20# [Beacon - France IN2P3 site] 
+www.cea.fr 132.166.172.2 # [Beacon - France, non IN2P3, RENATER site]
+ping.cern.ch 137.138.28.176 send=20# [Beacon - Switzerland Lab & monitoring site; Replaced d-name-2.cern.ch 8/1/99]                
+dns1.ethz.ch 129.132.98.12 # [Beacon - Swiss University]
+ping.desy.de 131.169.64.64 send=20# [Beacon - Germany Lab & monitoring site], changed 4/8/02 from r02hp04 by jerrordw
+znsun1.ifh.de 141.34.1.16 send=20# [Beacon - DESY/Zeuthen a key HEP site; Adde by Cottrell 9/3/99]
+pktw03.phy.tu-dresden.de 141.30.85.13 # [Beacon - Germany University, former E. Germany]
+www.nbi.dk 130.225.212.55 send=20# [Beacon - Nordic countries & Monitoring site] added 4/22/98
+www.uib.no 129.177.30.14 # [Beacon - Norway; Add 2/20/00] Requested by NP. University monitored by BNL
+www.lu.se 130.235.128.122 # [Beacon - Sweden, Requested by NP. Formally requested by ESSC to be a beacon site. Replaces ping.lucas.lu.se 5/25/01 Cottrell. Added as beacon 9/9/02]
+#(no name 5/25/01) ping.lucas.lu.se 130.235.92.107 # [Beacon - Sweden; Add 3/31/99] Replaces www.lu.se 1/15/99. Replaces dagobert.lucas.lu.se 3/31/99 {Candidate Beacon site}
+ping.rhnet.is 130.208.16.20 # [Beacon - Iceland, recommended by Marius, 8/15/01] Add 8/15/01 by Cottrell
+#! ns2.sri.ucl.ac.be 130.104.1.2 # [Beacon - Belgium; Add 2/20/00, remove 6/20/00]
+asrv1.iihe.ac.be 193.190.246.90 port=80 #[Beacon - Belgium; Add 6/20/00]
+keeshond.nikhef.nl 192.16.185.84) send=20#  [Beacon - Netherlands, major HENP site, IEPM collaborator add 9/9/02]
+# ns.iaea.or.at 193.81.60.201 # [Beacon - Austria, Name server at IAEA, Vienna. Added by Cottrell 9/12/99]
+uae6.ciemat.es 130.206.11.21 # [Beacon - Spain, Lab], has not responded since Jan 2002 (9/10/02)
+www.lip.pt 193.136.91.232 port=80# [Beacon - Portugul, Web server at Lab for Exp. Particle Phys., Lisboa. Added by Cottrell 6/21/00]
+www.uoa.gr 195.134.100.100 # [Beacon - Greece, University of Athens, beaconized 9/9/02] NATO. Greece. Added by Cottrell 9/11/99
+sarka.fzu.cz 147.231.26.40 # [Beacon - Czech site]
+#! sgiserv.rmki.kfki.hu # [Beacon - Hungary & monitoring site]
+ping.rmki.kfki.hu 148.6.176.200 # [Beacon - Hungary & monitoring site; Replaced sgiserv.rmki.kfki.hu 8/4/99]
+moon.atomki.hu 193.6.176.20 # [Beacon - Hungary]
+beta.carnet.hr 161.53.123.3 size=100# [Beacon - Croatia, mail gateway; Added 2/20/00] NATO. Mail gateway. Added by Cottrell 9/11/99
+www.ijs.si 193.2.4.6 size=100# [Beacon - Slovenia] Add by cottrell 9/1/98 following CHEP98 contact
+ba.sanet.sk 192.108.138.12 size=100# [Beacon - Slovakia] NATO. Slovakia. Mail gateway. Added by Cottrell 9/11/99
+# Poland. For NATO Advanced Networking Workshop Oct 1999 [for Beacon need a reasonably reachable host]
+kadri.ut.ee 193.40.5.94 # [Beacon - Estonia, represents Baltic States, mail gateway] NATO. Estonia. Mail gateway added by Cottrell 9/11/99
+www.lu.lv 195.13.129.152 # [Beacon - Latvia] NATO. Latvia. Added by Cottrell 9/14/99
+rainbow.inp.nsk.su 193.124.167.29 # [Beacon - Russian Siberian site, monitor site,  add 1/12/2000]
+ns.itep.ru 193.124.224.35 # [Beacon - Moscow on radio-msu, monitor site]
+ns.kiev.ua 62.149.2.12 size=100 # [Beacon - Ukraine, name server] NATO. Ukraine. Name server. Added by Cottrell 9/11/99
+www.kek.jp 130.87.104.100 send=20 # [Beacon - Japan monitoring site & HEP site]
+#!(unpingable)ns.riken.go.jp 134.160.4.5 send=20# [Beacon - Japan go.jp domain, Monitoring site; Add 9/29/98] One of 3 authoritative name servers for Riken.
+ping.riken.go.jp 134.160.38.144 # [Beacon - Japan go.jp site, with a good contact] Added ping.riken.go.jp 6/15/00
+cloud.kaist.kr.apan.net 192.249.24.20  #  Multi- homed [Beacon - Korea, Monitoring site; Add 9/12/99]
+dns1.vn 203.162.3.235 # [Beacon - Vietnam] namserver for VNU 
+sun.ihep.ac.cn 202.38.128.10  # [Beacon - China]
+dns.sinica.edu.tw 140.109.1.10 # [Beacon - Taiwan & Monitoring site] added 5/4/98 by Cottrell
+tifr.res.in 158.144.1.22 size=100# [Beacon - India; Add 8/2/99] (Tata Institute, Homi Bhabba Rd., Bombay 400 005, India)
+#buproxy.ac.il 128.139.197.25 #Added by Cottrell 8/1/98 # [Beacon - Israel; Add 9/5/99 by Cottrell]
+wwwproxy.ac.il 128.139.197.54 # [Beacon - Israel; Add 10/20/01 by Cottrell]Replace buproxy/bcproxy 9/7/01 at the request of Oded Comay
+#www.ph.unimelb.edu.au 128.250.54.36 # [Beacon - Australia] admin blocked 9/9/02
+www.unimelb.edu.au 128.250.6.182 # [Beacon - Australia] Replaced www.ph.unimelb.edu.au by Cottrell 9/9/02
+#!tuia.dmz.waikato.ac.nz   140.200.132.253  # [Beacon - New Zealand, on XIWT list] New Zealand - nslookup can't find it 7/8/99
+amp-kiwi.cs.waikato.ac.nz 130.217.250.21 #[Beacon - New Zealand, big Internet (AMP) monitoring site, replaces pinger3.waikato.ac.nz 9/9/02]
+eros.cnea.gov.ar 168.96.66.6 # [Beacon - Argentina monitoring, add 12/8/0] (Tandar - Particle Accelerator/CNEA, Centro Atomico Constituyentes (CAC), Buenos Aires campus, Argentina)
+#(no name 5/25/01)ping.lafex.cbpf.br 152.84.100.80 # [Beacon - Brazil, Rio de Janiero] (Centro Brasileiro de Pesquisas Fisicas LAFEX/CBPF), D0 collaborator, PDG booklet. 
+d0br1.lafex.cbpf.br 152.84.100.122 # [Beacon - Brazil, Rio de Janiero] Cottrell replaced ping.lafex 11/11/02 (same IP addr). Info from Grigoriev.
+#!www.uniandes.edu.co 157.253.50.8 size=100# [Ex Beacon - added 12/8/00, monitored by hep.net, PDG booklet, removed since ping blocked Nov 7 '01]
+www.puc.cl 146.155.99.60 size=100# [Beacon - monitored by ANL, JLAB, SLAC, add 12/8/00] poor reachability, Chile, Added by Cottrell 11/19/99 Santiago (Pontificia Univ. Catolica de Chile) from PDG booklet
+ultra.edu.uy 164.73.128.70 size=100# [Beacon - Uruguay] Uruguay, name server for edu.uy, Added by Cottrell 11/20/99
+www.uct.ac.za 137.158.128.7 size=100 # [Beacon - S. Africa] Added by Cottrell 11/8/99
+frcu.eun.eg 193.227.1.1 size=100# [Beacon - Egypt] Added by Cottrell 11/20/99
+traceroute.hkt.net 202.84.255.15 # [Beacon - Hong Kong, on XIWT list] Hong Kong Telecom
+#!radius3.singnet.com.sg   165.21.88.181    # [Beacon - Singapore, needed fo SSRL, also on XIWT list; Removed 8/1/99 since rate limiting]
+#!www.gutierrez.com        206.105.100.5    # [Beacon - Puerto Rico, on XIWT list] Guaynabo, Puerto Rico
+#!ns.gutierrez.com # [Beacon - Puerto Rico on XIWT list; Replaced www.gutierrez.com 8/1/99; Removed 8/9/99] (Guaynabo, Puerto Rico)
